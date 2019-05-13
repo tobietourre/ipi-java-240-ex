@@ -30,7 +30,7 @@ public class SpringConfig {
         return new WebPageManager();
     }
 
-    @Bean(name = "produitManager")
+    @Bean(name = "produitManager", initMethod = "initialiserCatalogue")
     @Scope("singleton")
     public ProduitManager produitManager(){
         ProduitManager pm = new ProduitManager();
