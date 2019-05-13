@@ -1,29 +1,29 @@
 package com.ipiecoles.java.java240;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.*;
 
 @Configuration
+
+@ComponentScan(basePackages = "com.ipiecoles.java.java240")
+@PropertySource("classpath:application.properties")
 public class SpringConfig {
+    @Value("${}")
+    public String url;
+
+    @Value("${bitcoinService.forceRefresh}")
+    Boolean forceRefresh;
+
     @Bean(name = "bitcoinServiceWithoutCache")
     @Scope("singleton")
     public BitcoinService bitcoinServiceWithoutCache(){
         BitcoinService bitcoinService = new BitcoinService();
-        bitcoinService.setForceRefresh(true);
-        bitcoinService.setWebPageManager(webPageManager());
+        bitcoinService.setForceRefresh(forceRefresh);
         return bitcoinService;
     }
 
-    @Bean(name = "bitcoinServiceWithCache")
-    @Scope("singleton")
-    public BitcoinService bitcoinServiceWithCache(){
-        BitcoinService bitcoinService = new BitcoinService();
-        bitcoinService.setForceRefresh(false);
-        bitcoinService.setWebPageManager(webPageManager());
-        return bitcoinService;
-    }
 
+    /*
     @Bean(name = "webPageManager")
     @Scope("singleton")
     public WebPageManager webPageManager(){
@@ -37,5 +37,7 @@ public class SpringConfig {
         pm.setBitcoinService(bitcoinServiceWithCache());
         pm.setWebPageManager(webPageManager());
         return pm;
-    }
+    }*/
+
+
 }

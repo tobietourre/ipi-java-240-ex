@@ -1,10 +1,17 @@
 package com.ipiecoles.java.java240;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class ProduitManager {
 
     private List<Produit> produits = new ArrayList<>();
@@ -17,9 +24,14 @@ public class ProduitManager {
         this.webPageManager = webPageManager;
     }
 
+    @Autowired
     private BitcoinService bitcoinService ;
 
+    @Autowired
     private WebPageManager webPageManager ;
+
+    @Value("${produitManager.catalogueUrl}")
+    private String catalogueUrl;
 
     /**
      * Méthode qui demande les caractéristiques d'un nouveau produit
@@ -62,8 +74,9 @@ public class ProduitManager {
      * Méthode qui initialise le catalogue à partir d'un fichier distant.
      * @throws IOException
      */
+    @PostConstruct
     public void initialiserCatalogue() throws IOException {
-        String catalogue = webPageManager.getPageContentsFromCacheIfExists("https://pjvilloud.github.io/ipi-java-240-cours/catalogue.txt");
+        String catalogue = webPageManager.getPageContentsFromCacheIfExists(catalogueUrl);
         int nbProduits = 0;
         for(String line : catalogue.split("\n")){
             String[] elements = line.split(";");
