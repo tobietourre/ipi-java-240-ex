@@ -1,18 +1,19 @@
 package com.ipiecoles.java.java240;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.*;
 
-@Configuration
-
-@ComponentScan(basePackages = "com.ipiecoles.java.java240")
-@PropertySource("classpath:application.properties")
+@SpringBootApplication
 public class SpringConfig {
 
     @Value("${bitcoinService.forceRefresh}")
     Boolean forceRefresh;
 
     @Bean(name = "bitcoinServiceWithoutCache")
+    @Qualifier("withoutCache")
     @Scope("singleton")
     public BitcoinService bitcoinServiceWithoutCache(){
         BitcoinService bitcoinService = new BitcoinService();
@@ -20,22 +21,9 @@ public class SpringConfig {
         return bitcoinService;
     }
 
-
-    /*
-    @Bean(name = "webPageManager")
-    @Scope("singleton")
-    public WebPageManager webPageManager(){
-        return new WebPageManager();
+    public static void main(String[] args){
+        System.out.println("Avant initialisation du contexte");
+        SpringApplication.run(SpringConfig.class, args);
+        System.out.println("Avant initialisation du contexte");
     }
-
-    @Bean(name = "produitManager", initMethod = "initialiserCatalogue")
-    @Scope("singleton")
-    public ProduitManager produitManager(){
-        ProduitManager pm = new ProduitManager();
-        pm.setBitcoinService(bitcoinServiceWithCache());
-        pm.setWebPageManager(webPageManager());
-        return pm;
-    }*/
-
-
 }

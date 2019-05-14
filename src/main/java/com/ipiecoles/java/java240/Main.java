@@ -1,20 +1,30 @@
 package com.ipiecoles.java.java240;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class Main {
+@Component
+public class Main implements CommandLineRunner {
 
-    public static void main(String[] args) throws IOException {
-        ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringConfig.class);
-        ProduitManager pm = ctx.getBean(ProduitManager.class);
-        BitcoinService bitcoinServiceWithoutCache = ctx.getBean("bitcoinServiceWithoutCache",BitcoinService.class);
+    @Autowired
+    private ProduitManager pm;
+
+    @Resource(name = "bitcoinServiceWithoutCache")
+    private BitcoinService bitcoinServiceWithoutCache;
+
+    @Override
+    public void run(String... args) throws IOException {
 
         System.out.println("Bienvenue !");
-        while(true){
+        while (true) {
             System.out.println("Vous souhaitez : ");
             System.out.println("1 - Connaître le cours du bitcoin");
             System.out.println("2 - Ajouter un produit au catalogue");
@@ -25,7 +35,7 @@ public class Main {
 
             Scanner scanner = new Scanner(System.in);
             int saisie = scanner.nextInt();
-            switch (saisie){
+            switch (saisie) {
                 case 1:
                     System.out.println("1 BTC = " + bitcoinServiceWithoutCache.getBitcoinRate() + " €");
                     break;
