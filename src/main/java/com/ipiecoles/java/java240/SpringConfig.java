@@ -8,8 +8,6 @@ import org.springframework.context.annotation.*;
 @ComponentScan(basePackages = "com.ipiecoles.java.java240")
 @PropertySource("classpath:application.properties")
 public class SpringConfig {
-    @Value("${}")
-    public String url;
 
     @Value("${bitcoinService.forceRefresh}")
     Boolean forceRefresh;
