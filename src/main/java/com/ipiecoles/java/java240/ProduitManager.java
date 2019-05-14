@@ -25,6 +25,9 @@ public class ProduitManager {
     }
 
     @Autowired
+    private ProduitRepository produitRepository;
+
+    @Autowired
     private BitcoinService bitcoinService ;
 
     @Autowired
@@ -84,6 +87,8 @@ public class ProduitManager {
             nbProduits++;
         }
         System.out.println("Ajout de " + nbProduits + " produits !");
+        produitRepository.saveAll(produits);
+        System.out.println("BDD : " + produitRepository.count() + "produits enregistrés");
     }
 
 }

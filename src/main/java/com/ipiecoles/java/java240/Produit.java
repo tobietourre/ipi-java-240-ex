@@ -1,9 +1,27 @@
 package com.ipiecoles.java.java240;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "produit")
 public class Produit {
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
+    @Column
     private String intitule;
 
+    @Column
     private Double prixEuro;
 
     public Produit(String intitule, Double prixEuro) {

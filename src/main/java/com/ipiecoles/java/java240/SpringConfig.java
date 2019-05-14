@@ -1,5 +1,6 @@
 package com.ipiecoles.java.java240;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -12,9 +13,8 @@ public class SpringConfig {
     @Value("${bitcoinService.forceRefresh}")
     Boolean forceRefresh;
 
-    @Bean(name = "bitcoinServiceWithoutCache")
+    @Autowired
     @Qualifier("withoutCache")
-    @Scope("singleton")
     public BitcoinService bitcoinServiceWithoutCache(){
         BitcoinService bitcoinService = new BitcoinService();
         bitcoinService.setForceRefresh(forceRefresh);

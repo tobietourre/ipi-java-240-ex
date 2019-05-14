@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 @Component
+@Profile("!test")
 public class Main implements CommandLineRunner {
 
     @Autowired

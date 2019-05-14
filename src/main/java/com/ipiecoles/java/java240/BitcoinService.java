@@ -21,10 +21,6 @@ public class BitcoinService {
     @Value("${bitcoinService.apiUrl}")
     private String apiUrl;
 
-    public void setWebPageManager(WebPageManager webPageManager) {
-        this.webPageManager = webPageManager;
-    }
-
     @Autowired
     public WebPageManager webPageManager;
 
